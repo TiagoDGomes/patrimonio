@@ -1,0 +1,58 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    margin: 0;
+}
+
+section {
+    min-height: 2em;
+    padding: 14px 3px 5px 7px;
+    margin: 0 auto;
+}
+
+section .descricao,
+section .detalhe {
+    display: inline-block;
+}
+
+section i a {
+    color: white;
+    text-decoration: none;
+}
+
+#pessoa {
+    background-color: black;
+    color: white;
+}
+
+#setor {
+    background-color: #5ab16b;
+    color: white;
+}
+
+#item {
+    background-color: #84bd8f;
+}
+
+#local {
+    background-color: green;
+    color: white;
+}
+
+p label {
+    display: inline-block;
+    min-width: 7em;
+}
+
+section i {
+    float: right;
+    margin-right: 1em;
+}
+
+section.option {
+    background-color: #eaeaea;
+    box-shadow: 3px 2px silver;
+    margin: 3px;
+}
