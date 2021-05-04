@@ -2,13 +2,15 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-body {
+body,
+input {
     margin: 0;
+    font-size: 1em;
 }
 
 section {
     min-height: 2em;
-    padding: 14px 3px 5px 7px;
+    padding: 8px 3px 0px 8px;
     margin: 0 auto;
 }
 
@@ -41,9 +43,38 @@ section i a {
     color: white;
 }
 
-p label {
+p {
+    clear: both;
+}
+
+p label:not(.upload-foto) {
     display: inline-block;
     min-width: 7em;
+    float: left;
+}
+
+p .upload-foto {
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    border: 1px solid silver;
+    box-shadow: 2px 2px #aeaeae;
+    text-align: center;
+    padding: 1px 1px 2px 1px;
+}
+
+p .upload-foto:active {
+    box-shadow: 1px 1px #aeaeae;
+    padding: 2px 1px 1px 1px;
+}
+
+.option textarea {
+    width: 60%;
+    height: 4em;
+}
+
+p .escondido {
+    display: none;
 }
 
 section i {
@@ -55,4 +86,41 @@ section.option {
     background-color: #eaeaea;
     box-shadow: 3px 2px silver;
     margin: 3px;
+    padding-bottom: 10px;
+}
+
+section .foto,
+.foto img {
+    width: 48px;
+    height: 32px;
+    float: left;
+    margin-right: 5px;
+    border: 1px solid silver;
+}
+
+.item .numero {
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: blue;
+    color: white;
+    border-radius: 5px;
+    padding: 2px;
+    display: inline-block;
+}
+
+.item .descricao {}
+
+.item .data {
+    font-size: .7em;
+}
+
+.item .apagar {
+    float: right;
+    font-size: .7em;
+    margin-right: 5px;
+}
+
+.item .apagar a,
+section .erro {
+    color: red;
 }

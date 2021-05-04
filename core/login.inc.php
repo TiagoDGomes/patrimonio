@@ -57,7 +57,6 @@ if (isset($_POST['codigo']) && isset($_POST['senha'])){
         $stmt2 = $db->prepare($sql);        
         $stmt2->execute();
         $stmt2->bind_result($id);
-        $id = $_SESSION['pessoa.id'];
         $stmt2->close();
 
         

@@ -1,4 +1,6 @@
-<?php include 'core.php'; ?>
+<?php include 'core.php';
+header('Content-type: text/html; charset=UTF-8'); 
+?>
 <!DOCTYPE html>
 <html>
 
@@ -19,29 +21,47 @@
             <i class="close"><a href="logout.php">&times</a></i>
         </section>
         <?php if (isset($_SESSION['pessoa.nome'])):  ?>
-
+            <?php require 'core/local.inc.php'; ?>
             <?php if (isset($_GET['local'])):  ?>
+                
                 <section id="local">
                     <span class="descricao"><?= @$_SESSION['local.descricao'] ?></span>
                     <i class="close"><a href="./">&times</a></i>
                 </section>
 
+                <?php require 'core/setor.inc.php'; ?>
                 <?php if (isset($_GET['setor'])):  ?>
                         <section id="setor">
                             <span class="descricao"><?= @$_SESSION['setor.descricao'] ?></span>
                             <i class="close"><a href="./?local=<?= $_GET['local'] ?>">&times</a></i>
                         </section>
                         <section id="item">
-                            <span class="descricao">O que você achou?</span>
+                            <span class="descricao">O que você encontrou?</span>
                             <i class="close"></i>
                         </section>
                         <section class="setor option">
-                            <form action="" method="post">
+                            <form action="" method="post" enctype="multipart/form-data">
+                                <?php if(isset($_GET['repetido'])) :?>
+                                    <span class="erro">Este número já foi registrado neste mês.</span>
+                                <?php endif; ?>
                                 <input type="hidden" name="local" value="<?= $_GET['local'] ?>">
                                 <input type="hidden" name="setor" value="<?= $_GET['setor'] ?>">                            
-                                <input type="text" autofocus name="numero">&nbsp;<input type="submit" value="Salvar">
+                                <p><label for="numero">Número:</label>
+                                <input type="number" autofocus id="numero" name="numero">&nbsp;</p>
+                                <p><label>Descrição:</label>
+                                <textarea name="descricao" id="descricao"></textarea>
+                                </p>
+                                <p><label>Foto:
+
+                                </label>
+                                <label class="upload-foto" for="foto">📷</label>
+                                <input class="escondido" accept="image/*" id="foto" type="file" name="foto">
+                                </p>
+                                <p><label>&nbsp;</label>
+                                <input type="submit" value="Salvar"></p>
                             </form>
                         </section>
+                        <?php render_registros(); ?>   
                     <?php else: ?>
                     <section id="setor">
                         <span class="descricao">Onde você está?</span>
