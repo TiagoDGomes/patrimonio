@@ -1,27 +1,31 @@
 <?php
+ini_set('display_errors', 1); 
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 if (isset($_POST['numero']) && isset($_POST['setor']) && isset($_POST['local'])){  
 
     $sql = "SELECT numero FROM registro WHERE YEAR(datahora) = YEAR(NOW()) AND MONTH(datahora) = MONTH(NOW()) AND numero = " . (int) $_POST['numero'];
     if ($result = $db->query($sql)) { 
         if (!($row = $result->fetch_assoc())) {
+
+            include_once 'resize.inc.php';
+
+            $uploaddir = __DIR__ . "/../fotos/";
+
+            $filename = store_uploaded_image('foto', $uploaddir, 1200,(int) $_POST['numero'] . "__");
+
+
+
             $sql = "INSERT INTO registro (numero, descricao, idsetor, idpessoa, foto) VALUES (?, ?, ?, ?, ?)";
             $stmt2 = $db->prepare($sql);
             $filename = basename($_FILES['foto']['name']);
             $stmt2->bind_param('ssiis', $_POST['numero'], $_POST['descricao'], $_POST['setor'], $_SESSION['pessoa.id'], $filename);
             $stmt2->execute();
             $stmt2->close();
+            
+            header('Location: ?local=' . $_POST['local'] . '&setor=' . $_POST['setor'] . '&salvo=1'); 
 
-            $uploaddir = __DIR__ . "/../fotos/";
-            $uploadfile = $uploaddir . $filename;
-
-            if (move_uploaded_file($_FILES['foto']['tmp_name'], $uploadfile)) {
-                include_once 'resize.inc.php';
-                resize_image($uploadfile, 1200, 800);
-            } else {
-                //echo "Possível ataque de upload de arquivo!\n";
-            }
-            header('Location: ?local=' . $_POST['local'] . '&setor=' . $_POST['setor'] . '&salvo=1');        
         
         } else {
             header('Location: ?local=' . $_POST['local'] . '&setor=' . $_POST['setor'] . '&repetido=1');        
@@ -45,11 +49,12 @@ function render_registros(){
             ?>                
                     <section class="item option"> 
                         <span class="foto">
-                            <?php $foto = __DIR__.'/../fotos/'. $row["foto"]; ?>                           
+                            <?php $file_image = $row["numero"]. "__" . $row["foto"]; ?>
+                            <?php $foto = __DIR__.'/../fotos/'.  $file_image; ?>                           
 
                             <?php if ($row["foto"] && file_exists($foto) ): ?>
-                                <a target="_blank" href="./fotos/<?= $row["foto"]?>">
-                                    <img src="./fotos/<?= $row["foto"]?>">
+                                <a target="_blank" href="./fotos/<?= $file_image?>">
+                                    <img src="./fotos/<?= $file_image ?>">
                                 </a>
                             <?php endif; ?>
 
